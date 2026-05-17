@@ -34,7 +34,7 @@ const seedRows: SeedTrackedDestinationRow[] = [
     returnDateTo: "2026-09-10",
     maxStops: 1,
     currencyCode: "GBP",
-    locale: "en-GB"
+    locale: "en"
   },
 ];
 
