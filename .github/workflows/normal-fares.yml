@@ -26,6 +26,16 @@ jobs:
 
       - name: Build project
         run: npm run build
+        
+      - name: Auto Sync Tracked Destinations
+        run: npm run seed:tracked-destinations
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
+          SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
+          SCRAPERAPI_KEY: ${{ secrets.SCRAPERAPI_KEY }}
+          RSS_FEED_URLS: ${{ secrets.RSS_FEED_URLS }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
 
       - name: Run normal fares scanner
         env:
