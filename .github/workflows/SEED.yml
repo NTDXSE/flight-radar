@@ -1,6 +1,5 @@
 name: Manual Database Seed
 
-# 讓這個工作流可以在 GitHub 網頁上手動點擊觸發
 on:
   workflow_dispatch:
 
@@ -24,9 +23,14 @@ jobs:
       - name: Build project
         run: npm run build
 
-      # 👇 核心：單獨跑這行，將 8 筆航線塞進你的 Turso 資料庫
       - name: Run Seed Script
         run: npm run seed:tracked-destinations
+        # 👇 這裡把 Zod 要求的變數全部補齊
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
+          SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
+          SCRAPERAPI_KEY: ${{ secrets.SCRAPERAPI_KEY }}
+          RSS_FEED_URLS: ${{ secrets.RSS_FEED_URLS }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          SCHEDULER_LEASE_DURATION_MS: 1800000 # 補上之前的防呆數字
