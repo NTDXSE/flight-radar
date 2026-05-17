@@ -132,6 +132,22 @@ const seedRows: SeedTrackedDestinationRow[] = [
     currencyCode: "GBP",
     locale: "en-GB"
   }
+    {
+    id: "TPE-NRT",
+    originAirportCode: "TPE",
+    destinationAirportCode: "NRT",
+    destinationCity: "Tokyo",
+    destinationCountry: "Japan",
+    tripType: "round_trip",
+    cabinClass: "economy",
+    departureDateFrom: "2026-09-01",
+    departureDateTo: "2026-09-03",
+    returnDateFrom: "2026-09-07",
+    returnDateTo: "2026-09-10",
+    maxStops: 1,
+    currencyCode: "TWD",
+    locale: "zh-TW"
+  },
 ];
 
 async function main(): Promise<void> {
