@@ -33,8 +33,8 @@ const seedRows: SeedTrackedDestinationRow[] = [
     returnDateFrom: "2026-09-07",
     returnDateTo: "2026-09-10",
     maxStops: 1,
-    currencyCode: "TWD",
-    locale: "zh-TW"
+    currencyCode: "USD",
+    locale: "en"
   },
 ];
 
