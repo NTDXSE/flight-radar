@@ -9,6 +9,29 @@ export function buildNormalFareEmbed(
   fare: NormalizedFareObservation,
   comparison: NormalFarePriceComparison = {}
 ): DiscordEmbed {
+  let airlineText = 'Unknown Airline';
+  try {
+    // 這裡的 fare.flights 就是你在資料庫看到的那串 JSON
+    const flightData = typeof fare.flights === 'string' 
+      ? JSON.parse(fare.flights) 
+      : fare.flights;
+
+    // 判斷它是單純的陣列，還是外層包了物件的結構（相容兩種情況）
+    const flightList = Array.isArray(flightData) 
+      ? flightData 
+      : (flightData?.flights || []);
+
+    if (Array.isArray(flightList) && flightList.length > 0) {
+      // 把所有航班的 airline 抓出來並過濾重複（例如去回程都是 Jetstar 就只顯示一個）
+      const uniqueAirlines = [...new Set(flightList.map((f: any) => f.airline).filter(Boolean))];
+      if (uniqueAirlines.length > 0) {
+        airlineText = uniqueAirlines.join(' + '); // 如果去回程不同航空，會變 "Jetstar + Peach"
+      }
+    }
+  } catch (e) {
+    console.error('Failed to parse flight details for airline text', e);
+  }
+  
   return {
     title: `Cheap fare found: ${fare.originAirportCode} -> ${fare.destinationAirportCode}`,
     description: buildDescription(comparison),
@@ -16,6 +39,7 @@ export function buildNormalFareEmbed(
     color: 0x2ecc71,
     fields: [
       { name: "Price", value: formatMoney(fare.currencyCode, fare.priceAmountMinor), inline: true },
+      { name: 'Airline', value: airlineText },
       { name: "Trip", value: fare.tripType, inline: true },
       { name: "Cabin", value: fare.cabinClass, inline: true },
       { name: "Source", value: buildSourceLabel(fare), inline: true },
