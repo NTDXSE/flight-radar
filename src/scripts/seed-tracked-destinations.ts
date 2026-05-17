@@ -131,8 +131,8 @@ const seedRows: SeedTrackedDestinationRow[] = [
     maxStops: 1,
     currencyCode: "GBP",
     locale: "en-GB"
-  }
-    {
+  },
+  {
     id: "TPE-NRT",
     originAirportCode: "TPE",
     destinationAirportCode: "NRT",
