@@ -55,7 +55,8 @@ export const normalizedFareObservationSchema = z.object({
   currencyCode: z.string().length(3),
   deepLink: z.string().url().optional(),
   flightFingerprint: z.string().min(1),
-  rawPayloadJson: z.string().min(2)
+  rawPayloadJson: z.string().min(2),
+  flights: z.union([z.string(), z.any()]).optional(),
 });
 
 export const rssItemSchema = z.object({
