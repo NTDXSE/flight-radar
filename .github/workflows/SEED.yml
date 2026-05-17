@@ -25,12 +25,14 @@ jobs:
 
       - name: Run Seed Script
         run: npm run seed:tracked-destinations
-        # 👇 這裡把 Zod 要求的變數全部補齊
         env:
+          # 這兩個必須填對，才能連到你的 Turso 資料庫
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DATABASE_AUTH_TOKEN: ${{ secrets.DATABASE_AUTH_TOKEN }}
-          SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
-          SCRAPERAPI_KEY: ${{ secrets.SCRAPERAPI_KEY }}
-          RSS_FEED_URLS: ${{ secrets.RSS_FEED_URLS }}
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          SCHEDULER_LEASE_DURATION_MS: 1800000 # 補上之前的防呆數字
+          
+          # 以下欄位為了應付 Zod 驗證，若 GitHub Secrets 沒有就自動塞假字串，完全不影響建檔
+          SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY || 'dummy_serpapi_key' }}
+          SCRAPERAPI_KEY: ${{ secrets.SCRAPERAPI_KEY || 'dummy_scraper_key' }}
+          RSS_FEED_URLS: ${{ secrets.RSS_FEED_URLS || 'https://dummy-url.com/rss' }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL || 'https://discord.com/api/webhooks/dummy' }}
+          SCHEDULER_LEASE_DURATION_MS: 1800000
